@@ -98,19 +98,18 @@ function ListContainer({ activeList, setActiveList }: ListContainerProps) {
     if (!listToEdit?.id || !listToEdit.title.trim()) return;
 
     try {
-      const updated = await updateTodoList(listToEdit.id, {
-        title: listToEdit.title,
-      });
+      await updateTodoList(listToEdit.id, listToEdit.title);
+
+      const updatedTitle = listToEdit.title;
+
       setLists((prev) =>
         prev.map((list) =>
-          list.id === listToEdit.id
-            ? { ...list, title: updated[0].title }
-            : list
+          list.id === listToEdit.id ? { ...list, title: updatedTitle } : list
         )
       );
 
       if (activeList.id === listToEdit.id) {
-        setActiveList({ id: listToEdit.id, title: listToEdit.title });
+        setActiveList({ id: listToEdit.id, title: updatedTitle });
       }
 
       setListToEdit(null);

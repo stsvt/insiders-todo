@@ -59,7 +59,6 @@ function Homepage() {
 
   const handleToggleComplete = async (id: string, isCompleted: boolean) => {
     try {
-      console.log(`Is completed: ${isCompleted}`);
       await updateTask(id, isCompleted);
       setTasks((prev) =>
         prev.map((task) =>

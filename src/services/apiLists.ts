@@ -38,19 +38,18 @@ export const deleteTodoList = async function (id: string) {
   }
 };
 
-export const updateTodoList = async function (
-  id: string,
-  updates: Partial<{ title: string }>
-) {
+export const updateTodoList = async function (id: string, title: string) {
   const { data, error } = await supabase
     .from("todo_lists")
-    .update(updates)
+    .update({ title })
     .eq("id", id)
     .select();
 
   if (error) {
     throw new Error("Something went wrong with updating the list");
   }
+
+  console.log(data);
 
   return data;
 };
