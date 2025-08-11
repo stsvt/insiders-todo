@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import ListContainer from "../components/lists/ListContainer";
+import type { Task } from "../types/tasks";
 import {
   addTask,
   deleteTask,
   fetchTasks,
   updateTask,
 } from "../services/apiTasks";
+
 import Tasks from "../components/tasks/Tasks";
 import TaskInput from "../components/tasks/TaskInput";
-import type { Task } from "../types/tasks";
 import Header from "../components/common/Header";
+import ListContainer from "../components/lists/ListContainer";
 
 type ActiveList = {
   id?: string;

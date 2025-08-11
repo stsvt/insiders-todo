@@ -27,7 +27,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     if (storedToken) {
       setTokenState(storedToken);
     }
-    setLoading(false); // закінчили ініціалізацію
+    setLoading(false);
   }, []);
 
   const setToken = (newToken: string | null) => {
@@ -61,4 +61,6 @@ function useAuth() {
   return context;
 }
 
+// ERROR: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+// eslint-disable-next-line react-refresh/only-export-components
 export { AuthProvider, useAuth };

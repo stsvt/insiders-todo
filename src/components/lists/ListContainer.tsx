@@ -1,14 +1,15 @@
 // ListContainer.tsx
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../services/supabase";
+import type { TodoList } from "../../types/task-lists";
 import {
   createTodoList,
   deleteTodoList,
   fetchTodoLists,
   updateTodoList,
 } from "../../services/apiLists";
-import { supabase } from "../../services/supabase";
-import type { TodoList } from "../../types/task-lists";
+
 import DeleteButton from "../common/DeleteButton";
 import EditButton from "../common/EditButton";
 

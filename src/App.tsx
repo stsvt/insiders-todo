@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { AuthProvider } from "./context/AuthContext";
+import store from "./store";
+
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Homepage from "./pages/Homepage";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";
-import { Provider } from "react-redux";
-import store from "./store";
 
 function App() {
   return (
