@@ -1,6 +1,9 @@
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { createUser } from "../services/apiUsers";
-import { useForm, type SubmitHandler } from "react-hook-form";
+
+import SubmitButton from "../components/common/SubmitButton";
+import ErrorMessage from "../components/common/ErrorMessage";
 
 type FormValues = {
   name: string;
@@ -14,16 +17,14 @@ function SignUp() {
     handleSubmit,
     setError,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     defaultValues: { name: "", email: "", password: "" },
   });
 
   const onSubmit: SubmitHandler<FormValues> = async function (formData) {
     try {
-      const data = await createUser(formData);
-      console.log(data);
-
+      await createUser(formData);
       reset();
     } catch (err) {
       const message =
@@ -60,9 +61,7 @@ function SignUp() {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
                 {errors.name && (
-                  <span className="mt-1 text-sm text-red-600">
-                    {errors.name.message}
-                  </span>
+                  <ErrorMessage>{errors.name.message}</ErrorMessage>
                 )}
               </div>
             </div>
@@ -89,9 +88,7 @@ function SignUp() {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
                 {errors.email && (
-                  <span className="mt-1 text-sm text-red-600">
-                    {errors.email.message}
-                  </span>
+                  <ErrorMessage>{errors.email.message}</ErrorMessage>
                 )}
               </div>
             </div>
@@ -120,22 +117,17 @@ function SignUp() {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
                 {errors.password && (
-                  <span className="mt-1 text-sm text-red-600">
-                    {errors.password.message}
-                  </span>
+                  <ErrorMessage>{errors.password.message}</ErrorMessage>
                 )}
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign up
-              </button>
+              <SubmitButton disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Sign up"}
+              </SubmitButton>
               {errors.root && (
-                <p className="text-sm text-red-600">{errors.root.message}</p>
+                <ErrorMessage>{errors.root.message}</ErrorMessage>
               )}
             </div>
           </form>

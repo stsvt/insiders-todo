@@ -1,18 +1,18 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/apiUsers";
+import SubmitButton from "../components/common/SubmitButton";
+import ErrorMessage from "../components/common/ErrorMessage";
+import { useAuth } from "../context/AuthContext";
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-type LoginProps = {
-  setToken: (newToken: string | null) => void;
-};
-
-function Login({ setToken }: LoginProps) {
+function Login() {
   const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   const {
     register,
@@ -27,7 +27,6 @@ function Login({ setToken }: LoginProps) {
       const data = await loginUser(formData);
       const accessToken = data.session.access_token;
 
-      localStorage.setItem("token", accessToken);
       setToken(accessToken);
 
       navigate("/homepage");
@@ -72,9 +71,7 @@ function Login({ setToken }: LoginProps) {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
                 {errors.email && (
-                  <span className="mt-1 text-sm text-red-600">
-                    {errors.email.message}
-                  </span>
+                  <ErrorMessage>{errors.email.message}</ErrorMessage>
                 )}
               </div>
             </div>
@@ -103,25 +100,17 @@ function Login({ setToken }: LoginProps) {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
                 {errors.password && (
-                  <span className="mt-1 text-sm text-red-600">
-                    {errors.password.message}
-                  </span>
+                  <ErrorMessage>{errors.password.message}</ErrorMessage>
                 )}
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              <SubmitButton disabled={isSubmitting}>
                 {isSubmitting ? "Loading..." : "Sign in"}
-              </button>
+              </SubmitButton>
               {errors.root && (
-                <span className="mt-1 text-sm text-red-600">
-                  {errors.root.message}
-                </span>
+                <ErrorMessage>{errors.root.message}</ErrorMessage>
               )}
             </div>
           </form>

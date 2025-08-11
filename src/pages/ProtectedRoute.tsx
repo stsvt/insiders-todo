@@ -1,12 +1,14 @@
 import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 type ProtectedRouteProps = {
-  token: string | null;
   children: ReactNode;
 };
 
-function ProtectedRoute({ token, children }: ProtectedRouteProps) {
+function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { token } = useAuth();
+
   if (!token) {
     return <Navigate to="/" replace />;
   }

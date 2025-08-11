@@ -1,4 +1,4 @@
-import type { User } from "../types/users";
+import type { LoginCredentials, User } from "../types/users";
 import { supabase } from "./supabase";
 
 export const createUser = async function (user: User) {
@@ -21,7 +21,7 @@ export const createUser = async function (user: User) {
   return data;
 };
 
-export const loginUser = async function (user: User) {
+export const loginUser = async function (user: LoginCredentials) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: user.email,
     password: user.password,
@@ -31,6 +31,5 @@ export const loginUser = async function (user: User) {
     throw new Error("Something went wrong with login user");
   }
 
-  console.log(data, error);
   return data;
 };
