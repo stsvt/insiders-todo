@@ -154,7 +154,7 @@ function ListContainer({ activeList, setActiveList }: ListContainerProps) {
                   type="text"
                   value={listToEdit?.title}
                   onChange={(e) => handleEditChange(e.target.value)}
-                  className="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none "
                   autoFocus
                 />
                 <div className="flex space-x-1 ml-2">
@@ -176,7 +176,7 @@ function ListContainer({ activeList, setActiveList }: ListContainerProps) {
               <>
                 <button
                   onClick={() => handleSelectList(list.id!, list.title)}
-                  className={`flex-1 text-left px-4 py-2 rounded-md hover:bg-gray-300
+                  className={`flex-1 text-left px-4 py-2 rounded-md cursor-pointer
                 ${
                   activeList.id === list.id
                     ? "bg-blue-500 text-white font-semibold"

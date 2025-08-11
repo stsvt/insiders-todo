@@ -24,7 +24,11 @@ function TaskItem({ task, onToggleComplete, onDeleteTask }: TaskItemProps) {
           checked={task.is_completed}
           onChange={handleChange}
         />
-        <span>{task.title}</span>
+        <span
+          className={`${task.is_completed ? "line-through text-gray-500" : ""}`}
+        >
+          {task.title}
+        </span>
       </div>
       <button
         onClick={handleDelete}
