@@ -30,10 +30,21 @@ export const createTodoList = async function (title: string, userId: string) {
 };
 
 export const deleteTodoList = async function (id: string) {
-  console.log("Deleting list with id:", id);
-  const { error } = await supabase.from("todo_lists").delete().eq("id", id);
+  const { error: taskDeleteError } = await supabase
+    .from("tasks")
+    .delete()
+    .eq("todo_list_id", id);
 
-  if (error) {
+  if (taskDeleteError) {
+    throw new Error("Failed to delete tasks related to the list");
+  }
+
+  const { error: listDeleteError } = await supabase
+    .from("todo_lists")
+    .delete()
+    .eq("id", id);
+
+  if (listDeleteError) {
     throw new Error("Something went wrong with deleting the list");
   }
 };
