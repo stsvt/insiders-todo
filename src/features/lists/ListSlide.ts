@@ -30,7 +30,7 @@ export const removeList = createAsyncThunk(
 export const renameList = createAsyncThunk(
   "lists/update",
   async ({ id, title }: { id: string; title: string }) => {
-    const updated = await updateTodoList(id, { title });
+    const updated = await updateTodoList(id, title);
     return updated[0];
   }
 );
